@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A modern, polished browser-based Tic Tac Toe game featuring Play vs AI and 2 Players local multiplayer modes.">
+  <title>Tic Tac Toe</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main id="app" class="app-container">
+    
+    <!-- ========================================== -->
+    <!-- SCREEN 0: LANDING PAGE (ENTRY)             -->
+    <!-- ========================================== -->
+    <section id="landing-screen" class="screen screen-landing" aria-labelledby="landing-title">
+      <div class="card landing-card">
+        <!-- Subtle decorative X and O background elements -->
+        <div class="landing-visual" aria-hidden="true">
+          <span class="visual-mark visual-x">X</span>
+          <span class="visual-mark visual-o">O</span>
+        </div>
+
+        <header class="landing-header">
+          <div class="landing-badge" aria-hidden="true">
+            <span class="badge-dot"></span>
+            <span class="badge-text">Pure Strategy</span>
+          </div>
+          <h1 id="landing-title" class="landing-title">TIC TAC TOE</h1>
+          <p class="landing-tagline">Classic strategy. Simple rules. Endless rematches.</p>
+        </header>
+
+        <div class="landing-action">
+          <button id="btn-start-game" class="btn btn-primary btn-start-game" type="button">
+            <span>START GAME</span>
+            <span class="start-btn-icon" aria-hidden="true">&rarr;</span>
+          </button>
+        </div>
+
+        <footer class="landing-footer">
+          <p class="landing-footer-text">PLAY &bull; COMPETE &bull; HAVE FUN</p>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SCREEN 1: MODE SELECTION (HOME)            -->
+    <!-- ========================================== -->
+    <section id="mode-selection-screen" class="screen screen-mode-selection hidden" aria-labelledby="app-title">
+      <div class="card selection-card">
+        <header class="selection-header">
+          <div class="logo-mark" aria-hidden="true">
+            <span class="mark mark-x">X</span>
+            <span class="mark-separator">/</span>
+            <span class="mark mark-o">O</span>
+          </div>
+          <h2 id="app-title" class="app-title">Tic Tac Toe</h2>
+          <p class="app-subtitle">Select a game mode to start playing</p>
+        </header>
+
+        <nav class="mode-options" aria-label="Game Mode Selection">
+          <button id="btn-pve" class="btn btn-mode" type="button">
+            <div class="mode-btn-content">
+              <span class="mode-btn-title">Play vs AI</span>
+              <span class="mode-btn-desc">Human (X) vs AI (O)</span>
+            </div>
+            <span class="mode-btn-arrow" aria-hidden="true">&rarr;</span>
+          </button>
+
+          <button id="btn-pvp" class="btn btn-mode" type="button">
+            <div class="mode-btn-content">
+              <span class="mode-btn-title">2 Players (Pass &amp; Play)</span>
+              <span class="mode-btn-desc">Local match on the same device</span>
+            </div>
+            <span class="mode-btn-arrow" aria-hidden="true">&rarr;</span>
+          </button>
+        </nav>
+
+        <div class="selection-footer">
+          <button id="btn-mode-back" class="btn btn-secondary btn-mode-back" type="button">
+            <span class="back-btn-arrow" aria-hidden="true">&larr;</span>
+            <span>Back</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SCREEN 2: GAME SCREEN (STRUCTURAL SHELL)   -->
+    <!-- ========================================== -->
+    <section id="game-screen" class="screen screen-game hidden" aria-labelledby="game-title">
+      <div class="card game-card">
+        <header class="game-header">
+          <h2 id="game-title" class="game-title">Tic Tac Toe</h2>
+          <div class="game-meta-bar">
+            <div id="mode-indicator" class="mode-indicator" aria-live="polite">
+              VS AI
+            </div>
+
+            <!-- In-game difficulty dropdown control (VS AI mode only) -->
+            <div id="difficulty-dropdown" class="difficulty-dropdown">
+              <button
+                id="btn-difficulty-toggle"
+                class="btn-difficulty-toggle"
+                type="button"
+                aria-haspopup="true"
+                aria-expanded="false"
+                aria-label="AI Difficulty: Medium"
+                title="Change AI Difficulty"
+              >
+                <span id="difficulty-badge" class="difficulty-badge">Medium</span>
+                <span class="difficulty-toggle-arrow" aria-hidden="true">&#9662;</span>
+              </button>
+
+              <div id="difficulty-menu" class="difficulty-menu hidden" role="menu" aria-label="AI Difficulty Selection">
+                <button
+                  class="difficulty-option"
+                  role="menuitemradio"
+                  data-difficulty="easy"
+                  aria-checked="false"
+                  type="button"
+                >
+                  <span class="difficulty-check" aria-hidden="true">&check;</span>
+                  <span class="difficulty-label">Easy</span>
+                </button>
+                <button
+                  class="difficulty-option active"
+                  role="menuitemradio"
+                  data-difficulty="medium"
+                  aria-checked="true"
+                  type="button"
+                >
+                  <span class="difficulty-check" aria-hidden="true">&check;</span>
+                  <span class="difficulty-label">Medium</span>
+                </button>
+                <button
+                  class="difficulty-option"
+                  role="menuitemradio"
+                  data-difficulty="bihar"
+                  aria-checked="false"
+                  type="button"
+                >
+                  <span class="difficulty-check" aria-hidden="true">&check;</span>
+                  <span class="difficulty-label">Bihar (Impossible)</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <div id="status-display" class="status-display" aria-live="polite">
+          <span class="status-text">Player X's Turn</span>
+        </div>
+
+        <div id="board" class="board-grid" role="grid" aria-label="Tic Tac Toe Board">
+          <button class="cell" data-index="0" role="gridcell" aria-label="Row 1, Column 1" disabled></button>
+          <button class="cell" data-index="1" role="gridcell" aria-label="Row 1, Column 2" disabled></button>
+          <button class="cell" data-index="2" role="gridcell" aria-label="Row 1, Column 3" disabled></button>
+          <button class="cell" data-index="3" role="gridcell" aria-label="Row 2, Column 1" disabled></button>
+          <button class="cell" data-index="4" role="gridcell" aria-label="Row 2, Column 2" disabled></button>
+          <button class="cell" data-index="5" role="gridcell" aria-label="Row 2, Column 3" disabled></button>
+          <button class="cell" data-index="6" role="gridcell" aria-label="Row 3, Column 1" disabled></button>
+          <button class="cell" data-index="7" role="gridcell" aria-label="Row 3, Column 2" disabled></button>
+          <button class="cell" data-index="8" role="gridcell" aria-label="Row 3, Column 3" disabled></button>
+        </div>
+
+        <footer class="game-controls">
+          <button id="btn-restart" class="btn btn-control" type="button">
+            Restart Game
+          </button>
+          <button id="btn-back" class="btn btn-control btn-secondary" type="button">
+            Back to Menu
+          </button>
+        </footer>
+      </div>
+    </section>
+
+  </main>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
